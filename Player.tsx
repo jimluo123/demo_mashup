@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { songsList } from "./songs";
+import Slider from "@react-native-community/slider";
 
 type PlayerProps = {
   isVisible: boolean;
@@ -42,6 +43,36 @@ const Player = (props: PlayerProps) => {
             marginTop: 20,
             borderRadius: 5,
           }}
+        />
+        <Text
+          style={{
+            fontSize: 30,
+            color: "white",
+            fontWeight: "600",
+            marginLeft: 20,
+            marginTop: 20,
+          }}
+        >
+          {songsList[currentSongIndex].title}
+        </Text>
+
+        <Text
+          style={{
+            fontSize: 16,
+            color: "white",
+            fontWeight: "600",
+            marginLeft: 20,
+          }}
+        >
+          {songsList[currentSongIndex].artist}
+        </Text>
+
+        <Slider
+          style={{ width: "90%", height: 40, alignSelf: "center" }}
+          minimumValue={props.progress.position}
+          maximumValue={props.progress.duration}
+          minimumTrackTintColor="#FFFFFF"
+          maximumTrackTintColor="#fff"
         />
 
         <TouchableOpacity
