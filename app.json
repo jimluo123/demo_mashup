@@ -34,11 +34,6 @@
     },
     "packagerOpts": {
       "assetExts": ["html"]
-    },
-    "extra": {
-      "eas": {
-        "projectId": "0ceb94c1-7045-43cd-9269-42e8dd3b5f03"
-      }
     }
   }
 }

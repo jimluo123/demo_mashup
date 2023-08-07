@@ -27,6 +27,7 @@ export default function App() {
       await TrackPlayer.setupPlayer();
       await TrackPlayer.updateOptions({
         // Media controls capabilities
+        alwaysPauseOnInterruption: true,
         capabilities: [
           Capability.Play,
           Capability.Pause,
