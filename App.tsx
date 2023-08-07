@@ -7,12 +7,15 @@ import { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
 import Player from "./Player";
 import TrackPlayer, {
-  Capability,
   usePlaybackState,
   useProgress,
-  State,
 } from "react-native-track-player";
 import { songsList } from "./songs";
+import {
+  AppKilledPlaybackBehavior,
+  Capability,
+  State,
+} from "react-native-track-player/lib/constants";
 export default function App() {
   const width = Dimensions.get("screen").width;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -20,31 +23,41 @@ export default function App() {
   const [sp, setSP] = useState(false);
 
   const progress = useProgress();
-  const playbackState = usePlaybackState();
+  const playbackState: any = usePlaybackState();
 
   const setupPlayer = async () => {
     try {
       await TrackPlayer.setupPlayer();
       await TrackPlayer.updateOptions({
         // Media controls capabilities
+
+        android: {
+          // This is the default behavior
+          appKilledPlaybackBehavior:
+            AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
+        },
         alwaysPauseOnInterruption: true,
         capabilities: [
           Capability.Play,
           Capability.Pause,
           Capability.SkipToNext,
           Capability.SkipToPrevious,
+          Capability.SeekTo,
           Capability.Stop,
         ],
 
         // Capabilities that will show up when the notification is in the compact form on Android
-        compactCapabilities: [Capability.Play, Capability.Pause],
+        compactCapabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.JumpBackward,
+          Capability.JumpForward,
+        ],
 
         // Icons for the notification on Android (if you don't like the default ones)
       });
       await TrackPlayer.add(songsList);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   useEffect(() => {
@@ -52,7 +65,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (State.Playing == playbackState) {
+    if (!!playbackState && State.Playing == playbackState) {
       if (progress.position.toFixed(0) == progress.duration.toFixed(0)) {
         if (currentIndex < songsList.length) {
           setCurrentIndex(currentIndex + 1);

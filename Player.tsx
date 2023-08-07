@@ -10,11 +10,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { songsList } from "./songs";
 import Slider from "@react-native-community/slider";
-import TrackPlayer, {
-  Progress,
-  State,
-  useProgress,
-} from "react-native-track-player";
+import TrackPlayer, { Progress, useProgress } from "react-native-track-player";
+import { State } from "react-native-track-player/lib/constants";
 
 type PlayerProps = {
   isVisible: boolean;
@@ -185,7 +182,7 @@ const Player = (props: PlayerProps) => {
 
         <TouchableOpacity
           onPress={() => props.onClose}
-          style={{ marginBottom: 60 }}
+          style={{ marginTop: 60 }}
         >
           <Text style={{ color: "white" }}>Hide</Text>
         </TouchableOpacity>
