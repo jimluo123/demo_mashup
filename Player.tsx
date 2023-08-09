@@ -181,7 +181,7 @@ const Player = (props: PlayerProps) => {
         </View>
 
         <TouchableOpacity
-          onPress={() => props.onClose}
+          onPress={() => props.onClose(false)}
           style={{ marginTop: 60 }}
         >
           <Text style={{ color: "white" }}>Hide</Text>
